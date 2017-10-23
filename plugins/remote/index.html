@@ -1,0 +1,10 @@
+<div ng-controller="Remote">
+    <div class="qrImage-container animate-grow" ng-show="focus == 'remote'">
+        <img class="qrImage animate-grow" src={{remoteImage}} />
+        <div ng-show="firstRun" class="first-run">
+            <h1>스마트미러에 오신걸 환영합니다.</h1>
+            <h3>QR code를 스캔하거나 ip주소를 치시면 원격 접속이 가능합니다.</h3>
+        </div>
+        <H2>{{remoteText}}</H2>
+    </div>
+</div>

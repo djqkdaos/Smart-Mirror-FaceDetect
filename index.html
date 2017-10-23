@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html ng-app="SmartMirror">
+
+<head ng-controller="Theme">
+  <meta charset="utf-8">
+  <title>Smart Mirror</title>
+	<!--파이차트 css-->
+	<style>
+		@font-face{
+			font-family: 'NanumGothicExtraBold';
+			src: url(/usr/share/fonts/truetype/nanumfont/NanumGothicExtraBold.ttf) format('truetype');
+		}
+		svg {
+		  width: 500px;
+		  height: 500px;
+		  margin: 0 auto;
+
+		   text.middle {
+			font-family: Lato;
+			font-weight: 300;
+			font-size: 24px;
+		  }
+		  
+		  .nvd3.nv-pie .nv-pieLabels text {
+			font-family: NanumGothicExtraBold;
+			
+			font-size: 18px;
+			font-weight: bold;
+			fill: #fff !important;
+		  }
+		}
+
+		.picture-container {
+		  position: relative;
+		  width: 600px;
+		  height: 338px;
+		  margin: 20px auto;
+		  border: 10px solid #fff;
+		  background: #000;
+		  box-shadow: 0 5px 5px #000;
+		}
+
+		  .picture {
+			display: block;
+			width: 100%;
+			height: auto;
+		  }
+		  
+		.face {
+		 z-index: 999;
+		  position: absolute;
+		  border: 2px solid #FFF;
+		}
+	</style>
+	<!--파이차트 css-->
+  <script>
+    const annyang = require('annyang')
+    const fs = require('fs')
+    let config
+    try{
+      config = require('./config.json')
+    } catch (e){
+      config = require('./remote/.config.default.json')
+    }
+    // Error logging
+    window.onerror = function (errorMsg, url, lineNumber) {
+        fs.appendFileSync('./smart-mirror.log', '['+ new Date().toString() + '] '
+        + errorMsg + '| Script: ' + url + ' Line: ' + lineNumber + '\n');
+    }
+  </script>
+
+  <!-- Styles and Resources -->
+  <link rel="shortcut icon" href="favicon.ico" />
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,800,700' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" ng-href="app/css/{{ layoutName }}.css" />
+  <link rel="stylesheet" href="app/css/weather-icons.css">
+  <!-- bower:css -->
+  <!-- endbower -->
+
+</head>
+
+<body ng-controller="MirrorCtrl" ng-cloak>
+  <div class="top">
+    <div class="top-left">
+      <div ng-include="'plugins/datetime/index.html'"></div>
+      <div ng-include="'plugins/calendar/index.html'"></div>
+	  	
+    </div>
+    <div class="top-right">
+      <div ng-include="'plugins/weather/index.html'"></div>
+      
+      <div ng-include="'plugins/stock/index.html'"></div>
+      
+      <div ng-include="'plugins/ha-display/index.html'"></div>
+    </div>
+  </div>
+  <div class="container" ng-class="(listening == true)?'listening':'not-listening'">
+    <div class="middle-center">
+      <h2 style="font-size: 75px;" ng-controller="Greeting" ng-bind="greeting" ng-cloak></h2>
+      <div ng-include="'plugins/remote/index.html'"></div>
+      
+      <div ng-include="'plugins/map/index.html'"></div>
+     
+      <div ng-include="'plugins/dilbert/index.html'"></div>
+	  <div ng-include="'plugins/Hue/index.html'"></div>
+      <div ng-include="'plugins/search/index.html'"></div>
+      <div ng-include="'plugins/bus_info/index.html'"></div>
+      <div ng-include="'plugins/reminder/index.html'"></div>
+      <div ng-include="'plugins/timer/index.html'"></div>
+      
+	  <div ng-include="'plugins/face_detection/index.html'"></div>
+	  <!--<div ng-include="'plugins/face_regist/index.html'"></div>-->
+	  
+    </div>
+    <div class="bottom-center">
+      <!-- Command list -->
+      <div ng-include="'plugins/commands/index.html'"></div>
+      <div ng-include="'plugins/rss/index.html'"></div>
+
+      <div class="error" ng-bind="speechError" ng-show="speechError"></div>
+      <div class="partial-result" ng-bind="partialResult" ng-hide="speechError"></div>
+    </div>
+    <div class="bottom-left">
+	  <div ng-include="'plugins/email/index.html'"></div>
+      <div ng-include="'plugins/fitbit/index.html'" ng-if="config.fitbit.creds"></div>
+      <div ng-include="'plugins/scrobbler/index.html'"></div>
+    </div>
+    <div class="bottom-right">
+      <!-- Someday something will live here -->
+	  <div ng-include="'plugins/face_detection/emotion_index.html'"></div>
+    </div>
+    <div ng-controller="Maker"></div>
+  </div>
+  <!-- Sleep cover -->
+  <div ng-controller="AutoSleep"></div>
+  <div ng-show="focus == 'sleep'" class="sleep-cover fade"></div>
+
+  <!-- Smart Mirror JS
+  ==========================================================================
+  The good stuff. -->
+	
+  <!-- bower:js -->
+  <script src="bower_components/moment/min/moment-with-locales.js"></script>
+  <script src="bower_components/angular/angular.js"></script>
+  <script src="bower_components/angular-animate/angular-animate.js"></script>
+  <script src="bower_components/angular-dynamic-locale/src/tmhDynamicLocale.js"></script>
+  <script src="bower_components/angular-translate/angular-translate.js"></script>
+  <script src="bower_components/angular-translate-loader-static-files/angular-translate-loader-static-files.js"></script>
+  <script src="bower_components/rrule/lib/rrule.js"></script>
+  <script src="bower_components/skycons/skycons.js"></script>
+  <!-- endbower -->
+
+  <script src="https://connect.soundcloud.com/sdk/sdk-3.0.0.js"></script>
+
+  <!-- App -->
+  <script src="app/js/app.js"></script>
+  <script src="app/js/focus.js"></script>
+
+  <!-- Services -->
+  <script src="plugins/calendar/service.js"></script>
+  <script src="plugins/timebox/service.js"></script>
+  
+  <script src="plugins/speech/service.js"></script>
+     <script src="plugins/light/service.js"></script>
+
+  <script src="plugins/geolocation/service.js"></script>
+  <script src="plugins/fitbit/service.js"></script>
+  <script src="plugins/autosleep/service.js"></script>
+  <script src="plugins/scrobbler/service.js"></script>
+  <script src="plugins/timer/service.js"></script>
+  
+
+  <!-- Controllers -->
+  <script src="app/js/controller.js"></script>
+  
+  <script src="plugins/search/controller.js"></script>
+  
+  <script src="plugins/dilbert/controller.js"></script>
+  <script src="plugins/map/controller.js"></script>
+  
+  <script src="plugins/timer/controller.js"></script>
+  
+  <script src="plugins/fitbit/controller.js"></script>
+  <script src="plugins/reminder/controller.js"></script>
+  <script src="plugins/rss/controller.js"></script>
+  <script src="plugins/bus_info/controller.js"></script>
+  <script src="plugins/stock/controller.js"></script>
+  <script src="plugins/autosleep/controller.js"></script>
+  <script src="plugins/scrobbler/controller.js"></script>
+  <script src="plugins/greeting/controller.js"></script>
+  <script src="plugins/weather/controller.js"></script>
+  <!--<script src="plugins/calendar/controller.js"></script>-->
+  <script src="plugins/remote/controller.js"></script>
+  <script src="plugins/maker/controller.js"></script>
+  <script src="plugins/Hue/controller.js"></script>
+ 
+  <script src="plugins/ha-display/controller.js"></script>
+  <script src="plugins/face_detection/controller.js"></script>
+  <!--<script src="plugins/face_regist/controller.js"></script>-->
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+  
+  
+  <!-- responsivevoice.js -->
+	<script src="http://code.responsivevoice.org/responsivevoice.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js"></script>
+	<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+	<script src="node_modules/jquery.facedetection/dist/jquery.facedetection.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/nvd3/1.7.0/nv.d3.min.js"></script>
+</body>
+
+</html>

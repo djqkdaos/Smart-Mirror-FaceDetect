@@ -1,0 +1,241 @@
+
+function Face_Regist($scope, $http, SpeechService, Focus) {
+	
+	var axios = require("axios");
+	const MSCSFACEAPI = require("mscs-face-api");
+	var Key = '4de19811f461498593d42fcc0343f721';
+	var useServer = 'WCUS';
+	var mscsfa = new MSCSFACEAPI(Key,"WCUS");
+	var personGroupId = 'ditsmartmirrorgroup';
+	var confidenceThreshold = 0.4;
+	var config2 = require("/home/pi/smart-mirror/config2.json");
+	var exec = require('child_process').exec;	
+	console.debug('얼굴등록 컨트롤러 추가 완료');
+	var filename ;
+	var uName = "";
+	var faceUrl ="";
+    // 얼굴인식 커맨드 추가
+
+	function findInPicture(){
+		var removeImg = document.getElementById('picture');
+		
+		var contentDiv = document.getElementById('faceDetectionContent');
+
+		while(contentDiv.firstChild){
+				contentDiv.removeChild(contentDiv.firstChild);
+		}
+		
+		
+		
+		var img = document.createElement('img');
+		img.className = "picture";
+		img.id = "picture";// 이미지 객체 생성
+		var imageDiv = document.createElement('div');
+		
+		imageDiv.className = "picture-container";
+        img.src = '/home/pi/smart-mirror/face_img/' + filename; // 이미지 경로 설정 (랜덤)
+		imageDiv.appendChild(img);        
+		contentDiv.appendChild(imageDiv); // board DIV 에 이미지 동적 추가
+		/* 
+		  $('.face').remove();
+
+		  $('#picture').faceDetection({
+			complete: function (faces) {
+			  for (var i = 0; i < faces.length; i++) {
+				$('<div>', {
+				  'class':'face',
+				  'css': {
+					'position': 'absolute',
+					'left':   faces[i].x * faces[i].scaleX + 'px',
+					'top':    faces[i].y * faces[i].scaleY + 'px',
+					'width':  faces[i].width  * faces[i].scaleX + 'px',
+					'height': faces[i].height * faces[i].scaleY + 'px'
+				  }
+				})
+				.insertAfter(this);
+			  }
+			},
+			error:function (code, message) {
+			  alert('Error: ' + message);
+			}
+		  });
+	*/	
+	}//사진에서 얼굴찾기 함수 끝
+	SpeechService.addCommand('face_regist', function () {
+		
+		$scope.face = "사용자를 등록하겠습니다 누구(으)로 해 줘 라고 말해주세요.";
+		if(responsiveVoice.voiceSupport()) {
+          responsiveVoice.speak("사용자등록을 진행하겠습니다 이름을 이야기 해주세요.","Korean Female");
+        }
+
+	
+		SpeechService.addCommand('user_name', function (userName) {
+		var user = userName;
+		uName = user;
+		$scope.face = user+"님이 맞습니까? 맞아 거울아 혹은 아니야 거울아 로 대답해주세요.";
+		if(responsiveVoice.voiceSupport()) {
+          responsiveVoice.speak(user+"님이 맞습니까?","Korean Female");
+        }
+		userNameRegist();
+		Focus.change("face_regist");
+		});
+	
+		function userNameRegist(){
+			
+			SpeechService.addCommand('checkName', function (ans) {
+					var an = ans;
+					if(an == '맞아'){
+						  $scope.face = "그럼 사진을 찍겠습니다.";
+						 if(responsiveVoice.voiceSupport()) {
+							responsiveVoice.speak("그럼 사진을 찍겠습니다.","Korean Female");
+						 }
+						camera()
+						setTimeout(interval, 2000);
+					}else{
+						  $scope.face = "아니라면 이름을 다시 누구(으)로 해줘 라고 말해주세요.";
+						  if(responsiveVoice.voiceSupport()) {
+						 responsiveVoice.speak("죄송합니다 다시 이름을 이야기 해주세요.","Korean Female");
+							 }
+			}
+			Focus.change("face_regist");
+			});
+		}
+		//------------------------------------------------
+		
+		//------------------------------------------------
+		var formatted ="";
+		filename = "";
+		function camera(){
+			var fs = require('fs');
+
+			var gcs = require('@google-cloud/storage')({
+						projectId: 'mindful-ship-176106',
+						keyFilename: '/home/pi/smart-mirror/plugins/face_detection/keyfile.json'
+					});
+
+			var datetime = require('node-datetime');
+			var dt = datetime.create();
+			 formatted = dt.format('YmdHMS');
+			
+
+			
+			
+			child = exec("fswebcam -r 1920x1080  --no-banner  /home/pi/smart-mirror/face_img/"+formatted+'face.jpg',
+				function (error, stdout, stderr) {
+				console.log('stdout: ' + stdout);
+				console.log('stderr: ' + stderr);
+				$scope.image = '/home/pi/smart-mirror/'+formatted+'face.jpg';
+				if (error !== null) {
+			 console.log('exec error: ' + error);
+						  }
+			});
+			filename = formatted+'face.jpg';
+			faceUrl = 'https://storage.googleapis.com/smartmirrortest/'+filename;
+			
+		
+
+		}
+		function interval(){	
+				
+				global.gcs = require('@google-cloud/storage')({
+  					projectId: 'mindful-ship-176106',
+ 					keyFilename: '/home/pi/smart-mirror/plugins/face_detection/keyfile.json'
+				});
+
+				var bucketName = 'smartmirrortest'
+				
+				// Reference an existing bucket.
+				var bucket = gcs.bucket(bucketName);
+		
+				// Upload a local file to a new file to be created in your bucket.
+				bucket.upload('/home/pi/smart-mirror/face_img/'+formatted+'face.jpg', function(err, file) {
+ 					 if (!err) {
+  					  bucket.file(filename).makePublic().then(() => {
+						console.log(`gs:${bucketName}/${filename} is now public.`);
+						$scope.face = "얼굴등록 진행중";
+						
+						$scope.faceUrl = faceUrl;
+						console.log(faceUrl);
+						setTimeout(faceCreatePersonInterval,1500);
+						setTimeout(addPersonInterval, 6000);
+						setTimeout(trainFace, 10000);
+						}).catch((err) => {
+						console.error('ERROR:', err);
+				});
+ 				}
+				});
+
+				
+			
+
+		}
+		
+		//face detection
+	
+	
+
+	var userData = 'dit smart mirror team';
+	
+	var personImage = faceUrl;
+	
+	mscsfa.trainPersonGroup(personGroupId);
+	mscsfa.getPersonGroupTrainingStatus(personGroupId);
+	mscsfa.getPersonGroup(personGroupId);
+
+	function faceCreatePersonInterval(){
+		console.log(faceUrl+"을 분석합니다.");
+	 mscsfa.createPerson(personGroupId, uName, userData);
+		
+	}
+	
+		
+	//mscsfa.createPerson(personGroupId, name, userData);		
+
+	function addPersonInterval(){
+		
+		mscsfa.addPersonFace(personGroupId, global.pIdValue, userData, faceUrl)
+				
+				
+          setTimeout(registComplete, 3000); 
+		
+	
+		
+	}
+	function registComplete(){
+	
+		if(global.addPerson = "c"){
+
+			if(responsiveVoice.voiceSupport()) {
+						responsiveVoice.speak("등록이 완료되었습니다.","Korean Female");
+					 }
+				var text = '{"'+global.pIdValue+'":"'+uName+'"}';
+				var obj = JSON.parse(text);
+				var updater = require('jsonfile-updater');
+				var fs = require('fs')
+				function getParsedPackage() {
+					 return JSON.parse(fs.readFileSync('/home/pi/smart-mirror/config2.json'))
+				};
+				console.log('수정');
+				updater('/home/pi/smart-mirror/config2.json').append('faceDetection.personId', obj , function(err) {
+					  if (err) return console.log(err)
+					  var pkg = getParsedPackage()
+					  console.log(pkg.author)
+				});
+		}else{
+			camera();
+			setTimeout(interval2, 2000);
+		}
+	}
+	function trainFace(){
+	mscsfa.trainPersonGroup(personGroupId);
+		mscsfa.getPersonGroupTrainingStatus(personGroupId);
+	}
+	
+	
+	//컨피그 수정
+	
+});
+}
+
+angular.module('SmartMirror')
+    .controller('Face_Regist', Face_Regist);
