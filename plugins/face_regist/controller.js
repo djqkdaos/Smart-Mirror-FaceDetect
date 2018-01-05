@@ -3,7 +3,7 @@ function Face_Regist($scope, $http, SpeechService, Focus) {
 	
 	var axios = require("axios");
 	const MSCSFACEAPI = require("mscs-face-api");
-	var Key = '4de19811f461498593d42fcc0343f721';
+	var Key = '3cd9cd448cdf4b2fb9d4c678a964322b';
 	var useServer = 'WCUS';
 	var mscsfa = new MSCSFACEAPI(Key,"WCUS");
 	var personGroupId = 'ditsmartmirrorgroup';
@@ -90,7 +90,7 @@ function Face_Regist($scope, $http, SpeechService, Focus) {
 							responsiveVoice.speak("그럼 사진을 찍겠습니다.","Korean Female");
 						 }
 						camera()
-						setTimeout(interval, 2000);
+						//setTimeout(interval, 2000);
 					}else{
 						  $scope.face = "아니라면 이름을 다시 누구(으)로 해줘 라고 말해주세요.";
 						  if(responsiveVoice.voiceSupport()) {
@@ -125,6 +125,7 @@ function Face_Regist($scope, $http, SpeechService, Focus) {
 				console.log('stdout: ' + stdout);
 				console.log('stderr: ' + stderr);
 				$scope.image = '/home/pi/smart-mirror/'+formatted+'face.jpg';
+				setTimeout(interval,2000);
 				if (error !== null) {
 			 console.log('exec error: ' + error);
 						  }
@@ -157,8 +158,8 @@ function Face_Regist($scope, $http, SpeechService, Focus) {
 						$scope.faceUrl = faceUrl;
 						console.log(faceUrl);
 						setTimeout(faceCreatePersonInterval,1500);
-						setTimeout(addPersonInterval, 6000);
-						setTimeout(trainFace, 10000);
+						//setTimeout(addPersonInterval, 6000);
+						//setTimeout(trainFace, 10000);
 						}).catch((err) => {
 						console.error('ERROR:', err);
 				});
@@ -183,8 +184,19 @@ function Face_Regist($scope, $http, SpeechService, Focus) {
 	mscsfa.getPersonGroup(personGroupId);
 
 	function faceCreatePersonInterval(){
-		console.log(faceUrl+"을 분석합니다.");
-	 mscsfa.createPerson(personGroupId, uName, userData);
+		console.log("사용자 등록중 createPerson");
+	 mscsfa.createPerson(personGroupId, uName, userData).then(function () {
+			
+			setTimeout(function(){
+				addPersonInterval()
+
+			}, 2000);
+			
+		}).catch(function (err) {
+                reject(err.response.data.error);
+				console.log(res.data);
+         });
+		
 		
 	}
 	
@@ -193,10 +205,22 @@ function Face_Regist($scope, $http, SpeechService, Focus) {
 
 	function addPersonInterval(){
 		
-		mscsfa.addPersonFace(personGroupId, global.pIdValue, userData, faceUrl)
+		mscsfa.addPersonFace(personGroupId, global.pIdValue, userData, faceUrl).then(function () {
+			
+			setTimeout(function(){
+				
+				registComplete()
+
+			}, 2000);
+			
+		}).catch(function (err) {
+                reject(err.response.data.error);
+				console.log(res.data);
+         });
+		
 				
 				
-          setTimeout(registComplete, 3000); 
+          
 		
 	
 		
@@ -207,7 +231,7 @@ function Face_Regist($scope, $http, SpeechService, Focus) {
 
 			if(responsiveVoice.voiceSupport()) {
 						responsiveVoice.speak("등록이 완료되었습니다.","Korean Female");
-					 }
+			}
 				var text = '{"'+global.pIdValue+'":"'+uName+'"}';
 				var obj = JSON.parse(text);
 				var updater = require('jsonfile-updater');
@@ -221,9 +245,15 @@ function Face_Regist($scope, $http, SpeechService, Focus) {
 					  var pkg = getParsedPackage()
 					  console.log(pkg.author)
 				});
+			config2.faceDetection.personId[global.pIdValue] = uName ;
+			trainFace();
 		}else{
+			if(responsiveVoice.voiceSupport()) {
+						responsiveVoice.speak("사진 촬영중 오류가 발생하여 다시 사진을 찍겠습니다.","Korean Female");
+			}
 			camera();
-			setTimeout(interval2, 2000);
+
+			setTimeout(addPersonInterval, 2000);
 		}
 	}
 	function trainFace(){

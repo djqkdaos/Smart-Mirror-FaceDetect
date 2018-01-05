@@ -29,13 +29,13 @@ function Face_Detection($scope, $http, SpeechService, Focus, CalendarService, $i
 		var uName = "";
 		var axios = require("axios");
 		const MSCSFACEAPI = require("mscs-face-api");
-		var Key = '4de19811f461498593d42fcc0343f721';
+		var Key = '38d5c8e0f7ce4786b7a8ada78b39bf0e';
 		var useServer = 'WCUS';
 		var mscsfa = new MSCSFACEAPI(Key,"WCUS");
 		var personGroupId = 'ditsmartmirrorgroup';
 		var confidenceThreshold = 0.5;
 		var userData = 'dit smart mirror team';
-		
+		var faceUrl = "";
 		
 		window.onload =	nv.addGraph(function() {
 							  chart = nv.models.pieChart()
@@ -281,76 +281,6 @@ function Face_Detection($scope, $http, SpeechService, Focus, CalendarService, $i
 
     // 얼굴인식 커맨드 추가
 	SpeechService.addCommand('face_detection', function () {
-			//그룹 트레이닝 
-			mscsfa.trainPersonGroup(personGroupId).then(function () {
-					console.log("트레이닝 후 그룹 상태 보기");
-					mscsfa.getPersonGroupTrainingStatus(personGroupId).then(function(){ console.log("체인성공") });
-					
-				}, function (error) {
-					// 실패시 
-					console.error(error);
-				}).catch(function (err) {
-						reject(err.response.data.error);
-						console.log(res.data);
-				 });
-		
-		global.name ="";
-		global.faceIds = [""];
-		global.faceDetection = {
-			 "emotion": {
-			  "anger": 0.1,
-			  "contempt": 0.1,
-			  "disgust": 0.1,
-			  "fear": 0.1,
-			  "happiness": 0.1,
-			  "neutral": 0.1,
-			  "sadness": 0.1,
-			  "surprise": 0.1
-			 }
-		};
-		
-		global.name ="";		
-		var emailUl = document.getElementById("emailUl");
-							
-		while(emailUl.firstChild){
-					emailUl.removeChild(emailUl.firstChild);
-		}
-
-		updateChart();	
-
-		
-
-		//------------------------------------------------
-		if(responsiveVoice.voiceSupport()) {
-          responsiveVoice.speak("얼굴 인식을 시작합니다.","Korean Female");
-        }
-		//------------------------------------------------
-		var fs = require('fs');
-
-		global.gcs = require('@google-cloud/storage')({
-  					projectId: 'mindful-ship-176106',
- 					keyFilename: '/home/pi/smart-mirror/plugins/face_detection/keyfile.json'
-				});
-
-		var datetime = require('node-datetime');
-		var dt = datetime.create();
-		var formatted = dt.format('YmdHMS');
-		
-
-		
-		//raspistill  -w 1920 -h 1080 -t 3000 -p '300,600,500,500' -o /home/pi/smart-mirror/face_img/"+formatted+'face.jpg
-		child = exec("fswebcam -r 1920x1080  --no-banner  /home/pi/smart-mirror/face_img/"+formatted+'face.jpg',
-  			function (error, stdout, stderr) {
-    		console.log('stdout: ' + stdout);
-    		console.log('stderr: ' + stderr);
-			
-    		if (error !== null) {
-     	 console.log('exec error: ' + error);
-  					  }
-		});
-		filename = formatted+'face.jpg';
-		var faceUrl = 'https://storage.googleapis.com/smartmirrortest/'+filename;
-				
 		function interval(){	
 		
 				var bucketName = 'smartmirrortest'
@@ -384,6 +314,79 @@ function Face_Detection($scope, $http, SpeechService, Focus, CalendarService, $i
 			
 
 		}
+			
+			//그룹 트레이닝 
+			/*mscsfa.trainPersonGroup(personGroupId).then(function () {
+					console.log("트레이닝 후 그룹 상태 보기");
+					mscsfa.getPersonGroupTrainingStatus(personGroupId).then(function(){ console.log("체인성공") });
+					
+				}, function (error) {
+					// 실패시 
+					console.error(error);
+				}).catch(function (err) {
+						reject(err.response.data.error);
+						console.log(res.data);
+				 });*/
+		
+		global.name ="";
+		global.faceIds = [""];
+		global.faceDetection = {
+			 "emotion": {
+			  "anger": 0.1,
+			  "contempt": 0.1,
+			  "disgust": 0.1,
+			  "fear": 0.1,
+			  "happiness": 0.1,
+			  "neutral": 0.1,
+			  "sadness": 0.1,
+			  "surprise": 0.1
+			 }
+		};
+		
+		global.name ="";		
+		var emailUl = document.getElementById("emailUl");
+							
+		while(emailUl.firstChild){
+					emailUl.removeChild(emailUl.firstChild);
+		}
+
+		updateChart();	
+
+		
+		
+		//------------------------------------------------
+		if(responsiveVoice.voiceSupport()) {
+          responsiveVoice.speak("감정분석을 시작합니다.","Korean Female");
+        }
+		//------------------------------------------------
+		var fs = require('fs');
+
+		global.gcs = require('@google-cloud/storage')({
+  					projectId: 'mindful-ship-176106',
+ 					keyFilename: '/home/pi/smart-mirror/plugins/face_detection/keyfile.json'
+				});
+
+		var datetime = require('node-datetime');
+		var dt = datetime.create();
+		var formatted = dt.format('YmdHMS');
+		
+		
+		
+		//raspistill  -w 1920 -h 1080 -t 3000 -p '300,600,500,500' -o /home/pi/smart-mirror/face_img/"+formatted+'face.jpg
+		child = exec("fswebcam -r 1920x1080  --no-banner  /home/pi/smart-mirror/face_img/"+formatted+'face.jpg',
+		//child = exec("fswebcam --set brightness=0% -r 1920x1080  --no-banner  /home/pi/smart-mirror/face_img/"+formatted+'face.jpg',
+  			function (error, stdout, stderr) {
+    		console.log('stdout: ' + stdout);
+    		console.log('stderr: ' + stderr);
+			setTimeout(interval, 2000);
+    		if (error !== null) {
+     	 console.log('exec error: ' + error);
+  					  }
+		});
+		filename = formatted+'face.jpg';
+		faceUrl = 'https://storage.googleapis.com/smartmirrortest/'+filename;
+				
+		
 		
 		//face detection
 
@@ -425,13 +428,13 @@ function Face_Detection($scope, $http, SpeechService, Focus, CalendarService, $i
 							contentDiv.removeChild(contentDiv.firstChild);
 					}
 					
-					if(responsiveVoice.voiceSupport()) {	 
+					/*if(responsiveVoice.voiceSupport()) {	 
 						 responsiveVoice.speak("주인님 다시한번 사용자인증 해주세요.","Korean Female");
-					}
+					}*/
 			
 					var node = document.createElement("h2");                 // Create a <li> node
 					var textnode = document.createTextNode("주인님  다시한번 사용자 인증 해주세요.");         // Create a text node
-					node.appendChild(textnode);                    
+					//node.appendChild(textnode);                    
 					contentDiv.appendChild(node);
 					
 				}
@@ -449,30 +452,30 @@ function Face_Detection($scope, $http, SpeechService, Focus, CalendarService, $i
 		
 		var pI = global.personId;
 		console.log(pI);
-
+		updateChart();	
 		if(global.personId != undefined && global.personId != ""){
 			
-			
-			
 			global.name  = config2.faceDetection.personId[pI];
-			
+			console.log(global.name);
 			$scope.face = global.name+"님 어서오세요.";
 			 if(responsiveVoice.voiceSupport()) {
 				 responsiveVoice.speak(global.name+"님 어서오세요.","Korean Female");
 			 }
 
-			 $scope.confidenceCheck = "신뢰도 " +global.confidence*100 +"% 일치";
+			 //$scope.confidenceCheck = "신뢰도 " +global.confidence*100 +"% 일치";
 			 
 		
 			 console.log($scope.confidenceCheck);
 			updateChart();	
-			setTimeout(confidence_voice,4000);
+			//setTimeout(confidence_voice,4000);
 			setTimeout(emotionCheck,8000);
 			getCalendar();
 			$interval(getCalendar, config.calendar.refreshInterval * 60000 || 1800000);
 			 global.personId = "";
 			config2.faceDetection.faceId = [];
-			
+			if(global.confidence>0.6){
+				mscsfa.addPersonFace(personGroupId, pI, userData, faceUrl);
+			}
 			imapSevice(global.name);
 			
 		
@@ -483,17 +486,19 @@ function Face_Detection($scope, $http, SpeechService, Focus, CalendarService, $i
 				while(contentDiv.firstChild){
 						contentDiv.removeChild(contentDiv.firstChild);
 				}
-				
-				if(responsiveVoice.voiceSupport()) {	 
+				setTimeout(function(){
+				/*if(responsiveVoice.voiceSupport()) {	 
 					 responsiveVoice.speak("주인님 사용자등록후에 사용자인증 해주세요.","Korean Female");
-				}
+				}*/
+				},3000);
+				
 		}
 		
 		
 	}
 		function confidence_voice(){
 			if(responsiveVoice.voiceSupport()) {	 
-				 responsiveVoice.speak("신뢰도"+parseInt(global.confidence*100+10)+"% 일치합니다.","Korean Female");
+				 responsiveVoice.speak("신뢰도"+parseInt(global.confidence*100)+"% 일치합니다.","Korean Female");
 			}
 		}
 			
@@ -608,7 +613,7 @@ function Face_Detection($scope, $http, SpeechService, Focus, CalendarService, $i
 		//여기 까지
 	
 
-		setTimeout(interval, 2000);
+		
 		
 		$scope.face = "얼굴인식 중";
 		

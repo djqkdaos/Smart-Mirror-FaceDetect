@@ -207,14 +207,19 @@
             "description": "컬러테라피 실행을멈춥니다."
 	},
         "face_detection": {
-            "text": "사용자 인증",
-            "voice": "사용자 인증",
-            "description": "사용자의 얼굴을 인식하여 로그인합니다."
+            "text": "감정 분석",
+            "voice": "감정 분석",
+            "description": "감정분석을 시작합니다."
         },
         "bus": {
-            "text": "버스",
-            "voice": "버스",
+            "text": "____정류장 보여 줘",
+            "voice": "*busName 정류장 보여 줘",
             "description": "사용자의 얼굴을 인식하여 로그인합니다."
+        },
+        "face_regist": {
+            "text": "사용자 등록",
+            "voice": "사용자 등록",
+            "description": "사용자의 얼굴을 인식하여 등록합니다."
         }
 	
     },

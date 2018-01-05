@@ -199,36 +199,35 @@ ul.calendar {
     margin-left: auto;
     display: block;
     text-align: right;
-    width: 460px;
+    width: 460px;/*230px;*/
 }
 
 .weather-today .temperature {
-    font-size: 120px;
+    font-size: 120px;/*제일위의 현재 온도*/
 }
 
 .weather-week-descriptor {
     font-family: 'Open Sans', sans-serif;
-    font-size: 24px;
+    font-size: 34px;/*12px;*/
     margin-left: auto;
-    margin-bottom: 20px;
-    text-align: justify;
+    margin-bottom: 10px;
+    text-align: justify; /*날씨위의 설명글*/
 }
 
 .weather-week {
     margin-right: 10px;
-    font-size: 44px;
+    font-size: 60px;/*요일*/
 }
 
 .weather-week .day {
     display: inline-block;
-    margin-right: 15px;
-    width: 80px;
+    margin-right: 10px;
+    width: 40px;/*40px;*/
 }
 
 .weather-week .temperature {
     display: inline-block;
-	margin-left: 10px;
-    width: 100px;
+    width: 100px;/*50px;*/
 }
 
 .weather .weather-today canvas,
@@ -507,7 +506,7 @@ ul.calendar {
     position: relative;
     top: -10px;
     display: inline-block;
-    font-size: 45px;
+    font-size: 60px;
     padding-right: 5px;
     font-weight: 100;
     margin-right: 10px;
@@ -540,12 +539,91 @@ ul.calendar {
 
 .news-title {
     font-family: 'Open Sans', sans-serif;
-    font-size: 20px;
+    font-size: 24px;
     margin-bottom: 5px;
 }
 
 .news-content {
     font-family: 'Open Sans', sans-serif;
-    font-size: 30px;
-    margin-bottom: 55px;
+    font-size: 35px;
+    margin-bottom: 65px;
 }
+
+.rwd-table {
+  background: #34495E;
+  color: #fff;
+  border-radius: .4em;
+  overflow: hidden;
+  tr {
+    border-color: lighten(#34495E, 10%);
+  }
+  th, td {
+    margin: .5em 1em;
+    @media (min-width: $breakpoint-alpha) { 
+      padding: 1em !important; 
+    }
+  }
+  th, td:before {
+    color: #dd5;
+  }
+}
+
+.rwd-table {
+  margin: 1em 0;
+  min-width: 300px; // adjust to your needs
+  font-size: 40px;
+  tr {
+    border-top: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  th {
+    display: none; // for accessibility, use a visually hidden method here instead! Thanks, reddit!   
+  }
+  
+  td {
+    display: block; 
+    
+    &:first-child {
+      padding-top: .5em;
+    }
+    &:last-child {
+      padding-bottom: .5em;
+    }
+
+    &:before {
+      content: attr(data-th)": "; // who knew you could do this? The internet, that's who.
+      font-weight: bold;
+
+      // optional stuff to make it look nicer
+      width: 6.5em; // magic number :( adjust according to your own content
+      display: inline-block;
+      // end options
+      
+      @media (min-width: $breakpoint-alpha) {
+        display: none;
+      }
+    }
+  }
+  
+  th, td {
+    text-align: left;
+    
+    @media (min-width: $breakpoint-alpha) {
+      display: table-cell;
+      padding: .25em .5em;
+      
+      &:first-child {
+        padding-left: 0;
+      }
+      
+      &:last-child {
+        padding-right: 0;
+      }
+    }
+
+  }
+  
+  
+}
+

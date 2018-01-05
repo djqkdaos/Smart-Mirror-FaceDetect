@@ -1,4 +1,23 @@
-<!-- busTime_info-->
-<div  class="contents-box map animate-grow" ng-show="focus == 'busTime_info'">
-    <h2 ng-controller="Face_Detection" class="contents face_detection animate-grow">{{bus}}</h2><!--{{}}이것은 스코프값-->
+<!-- bus_info -->
+<style>
+	table.type11 {
+    border-collapse: separate;
+    border-spacing: 1px;
+    text-align: center;
+    line-height: 1.5;
+    margin: 20px 10px;
+}
+</style>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<div  class="contents-box map animate-grow" ng-show="focus == 'bus_info'">
+	<div ng-controller = "bus_info">
+		<!--<ul id = "busTimeUl" style="list-style:none;">-->
+			<!--<li></li>-->
+		<!--</ul>-->
+		<table id = "busTimeUI" class = "rwd-table">
+			
+		</table>
+		
+	</div>
 </div>

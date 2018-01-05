@@ -6,9 +6,12 @@ function Hue($scope, $http, SpeechService, Focus) {
 
 	hue.bridge = "192.168.0.3";  // from hue.getBridges 
 	hue.username = "wRFdbK1r0bfbYV2nt0mzUvZqIg90uSd2ncnkbMcn"; // from hue.auth 
+	var config2 = require("/home/pi/smart-mirror/config2.json");
 
 	SpeechService.addCommand('hue_off', function (room) {
-	
+	if(responsiveVoice.voiceSupport()) {	 
+				 responsiveVoice.speak(room+"불을 끕니다.","Korean Female");
+			}
 		switch (room) {
 			  case "거실"  : 
 						hue.light(1).off();
@@ -16,7 +19,7 @@ function Hue($scope, $http, SpeechService, Focus) {
 					  .then(function(lights){
 						console.log(lights);
 						console.log('------------------');
-						console.log(Object.entries(lights)[0].state.bri);
+						//console.log(Object.entries(lights)[0].state.bri);
 						
 					  })
 					  .catch(function(err){
@@ -40,7 +43,9 @@ function Hue($scope, $http, SpeechService, Focus) {
 	});
 
 	SpeechService.addCommand('hue_on', function (room) {
-	
+	if(responsiveVoice.voiceSupport()) {	 
+				 responsiveVoice.speak(room+"불을 켭니다.","Korean Female");
+			}
 		switch (room) {
 			  case "거실"  : 
 						hue.light(1).on();
@@ -61,7 +66,9 @@ function Hue($scope, $http, SpeechService, Focus) {
 		
 	});
 	SpeechService.addCommand('hue_red', function (room) {
-	
+		if(responsiveVoice.voiceSupport()) {	 
+				 responsiveVoice.speak(room+"불을 붉은색으로 바꾸겠습니다.","Korean Female");
+			}
 		var state = {bri: 200, sat: 254, hue: 65535};
  
 		
@@ -87,6 +94,9 @@ function Hue($scope, $http, SpeechService, Focus) {
 	});
 	SpeechService.addCommand('hue_green', function (room) {
 	//bri=밝기,sat=색의 진한 정도 hue=색조합
+		if(responsiveVoice.voiceSupport()) {	 
+				 responsiveVoice.speak(room+"불을 초록색으로 바꾸겠습니다.","Korean Female");
+			}
 		var state = {bri: 200, sat: 254, hue: 25500};
 		switch (room) {
 			  case "거실"  : 
@@ -105,7 +115,10 @@ function Hue($scope, $http, SpeechService, Focus) {
 		
 	});
 	SpeechService.addCommand('hue_yellow', function (room) {
-	
+		
+			if(responsiveVoice.voiceSupport()) {	 
+				 responsiveVoice.speak(room+"불을 노랑색으로 바꾸겠습니다.","Korean Female");
+			}
 		var state = {bri: 200, sat: 254, hue: 12750};
  
 		switch (room) {
@@ -126,6 +139,9 @@ function Hue($scope, $http, SpeechService, Focus) {
 	
 	SpeechService.addCommand('hue_pink', function (room) {
 	
+		if(responsiveVoice.voiceSupport()) {	 
+				 responsiveVoice.speak(room+"불을 핑크색으로 바꾸겠습니다.","Korean Female");
+			}
 		var state = {bri: 200, sat: 254, hue: 56100};
 		switch (room) {
 			  case "거실"  : 
@@ -144,7 +160,11 @@ function Hue($scope, $http, SpeechService, Focus) {
 	});
 	
 	SpeechService.addCommand('hue_white', function (room) {
-	
+		
+			if(responsiveVoice.voiceSupport()) {	 
+				 responsiveVoice.speak(room+"불을 흰색으로 바꾸겠습니다.","Korean Female");
+			}
+
 		var state = {bri: 200, sat: 0, hue: 65535};
  
 		switch (room) {
@@ -163,7 +183,10 @@ function Hue($scope, $http, SpeechService, Focus) {
 		
 	});
 	SpeechService.addCommand('hue_blue' ,function (room) {
-	
+		if(responsiveVoice.voiceSupport()) {	 
+				 responsiveVoice.speak(room+"불을 파란색으로 바꾸겠습니다.","Korean Female");
+			}
+		
 		var state = {bri: 200, sat: 0, hue: 46920};
  
 		switch (room) {
@@ -183,6 +206,8 @@ function Hue($scope, $http, SpeechService, Focus) {
 	});
 	SpeechService.addCommand('hue_colorloop', function (room) {
 		
+
+
 		switch (room) {
 			  case "거실"  : 
 						hue.light(1).setState({effect: "colorloop"});
@@ -216,6 +241,9 @@ function Hue($scope, $http, SpeechService, Focus) {
 		
 	});
 	SpeechService.addCommand('hue_bright', function (room) {
+			if(responsiveVoice.voiceSupport()) {	 
+				 responsiveVoice.speak(room+"불을 좀더 밝게 바꾸겠습니다.","Korean Female");
+			}
 		var livingroom_briPlus, livingroom_sat_info, livingroom_hue_info;
 		var bedroom_briPlus, bedroom_sat_info, bedroom_hue_info;
 		var colorT_briPlus, colorT_sat_info, colorT_hue_info;
@@ -265,6 +293,9 @@ function Hue($scope, $http, SpeechService, Focus) {
 		
 	});
 	SpeechService.addCommand('hue_dark', function (room) {
+			if(responsiveVoice.voiceSupport()) {	 
+				 responsiveVoice.speak(room+"불을 좀더 어둡게 바꾸겠습니다.","Korean Female");
+			}
 		var livingroom_briPlus, livingroom_sat_info, livingroom_hue_info;
 		var bedroom_briPlus, bedroom_sat_info, bedroom_hue_info;
 		var colorT_briPlus, colorT_sat_info, colorT_hue_info;
@@ -404,11 +435,12 @@ function Hue($scope, $http, SpeechService, Focus) {
 		var dirname = '/home/pi/smart-mirror/emotionSound'
 			
 		//--------------------------------------------------------------
-		if(emotion.anger>=0.5){
+		if(global.faceDetection.emotion.anger>=0.5){
 				if(responsiveVoice.voiceSupport()) {
 				  responsiveVoice.speak("화났을 때 좋은 컬러테라피를 실행합니다..","Korean Female");
 				}
-				var firstState = {bri: 254, sat: 254, hue: 14910};
+				var firstState = {bri: 254, sat: 254, hue: 46920};
+				
 				hue.light(3).setState(firstState).then(console.log).catch(console.error);
 				//-------현재 불 정보 get------------------------------
 				hue.getLights()
@@ -434,7 +466,7 @@ function Hue($scope, $http, SpeechService, Focus) {
 
 			
 			
-		}else if(emotion.contempt>=0.5){
+		}else if(global.faceDetection.emotion.contempt>=0.5){
 				if(responsiveVoice.voiceSupport()) {
 					  responsiveVoice.speak("기분이 좋지않을 때 좋은 컬러테라피를 실행합니다..","Korean Female");
 				}
@@ -459,7 +491,7 @@ function Hue($scope, $http, SpeechService, Focus) {
 				
 					
 				//-----------------------------------------------------------------
-		}else if(emotion.disgust>=0.5){
+		}else if(global.faceDetection.emotion.disgust>=0.5){
 				if(responsiveVoice.voiceSupport()) {
 					  responsiveVoice.speak("기분이 좋지않을 때 좋은 컬러테라피를 실행합니다..","Korean Female");
 					}
@@ -484,7 +516,7 @@ function Hue($scope, $http, SpeechService, Focus) {
 				
 					
 			//------------------------------------------------------------------------------
-		}else if(emotion.fear>=0.5){
+		}else if(global.faceDetection.emotion.fear>=0.5){
 			if(responsiveVoice.voiceSupport()) {
 					  responsiveVoice.speak("두려울 때 좋은 컬러테라피를 실행합니다..","Korean Female");
 					}
@@ -510,7 +542,7 @@ function Hue($scope, $http, SpeechService, Focus) {
 					
 			//------------------------------------------------------------------------------
 			
-		}else if(emotion.happiness>=0.5){
+		}else if(global.faceDetection.emotion.happiness>=0.5){
 			if(responsiveVoice.voiceSupport()) {
 					  responsiveVoice.speak("행복 할 때 좋은 컬러테라피를 실행합니다..","Korean Female");
 					}
@@ -536,7 +568,7 @@ function Hue($scope, $http, SpeechService, Focus) {
 					
 			//------------------------------------------------------------------------------
 			
-		}else if(emotion.neutral>=0.5){
+		}else if(global.faceDetection.emotion.neutral>=0.5){
 			if(responsiveVoice.voiceSupport()) {
 					  responsiveVoice.speak("기분이 좋게 시작할수 있는 컬러테라피를 실행합니다..","Korean Female");
 					}
@@ -562,7 +594,7 @@ function Hue($scope, $http, SpeechService, Focus) {
 					
 			//------------------------------------------------------------------------------
 			
-		}else if(emotion.sadness>=0.5){
+		}else if(global.faceDetection.emotion.sadness>=0.5){
 			if(responsiveVoice.voiceSupport()) {
 					  responsiveVoice.speak("슬플 때 좋은 컬러테라피를 실행합니다..","Korean Female");
 					}
@@ -592,7 +624,7 @@ function Hue($scope, $http, SpeechService, Focus) {
 			if(responsiveVoice.voiceSupport()) {
 					  responsiveVoice.speak("놀랐을때 진정 시킬수 있는 컬러테라피를 실행합니다..","Korean Female");
 					}
-			var firstState = {bri: 254, sat: 254, hue: 46920};
+			var firstState = {bri: 254, sat: 200, hue: 56100};
 				hue.light(3).setState(firstState).then(console.log).catch(console.error);
 				//-------현재 불 정보 get------------------------------
 				hue.getLights()
@@ -627,47 +659,7 @@ function Hue($scope, $http, SpeechService, Focus) {
 		
 		
 	});
-	console.log('버스정보 추가');
 	
-	
-	SpeechService.addCommand('bus', function () {
-		console.log('버스실행');
-		var request = require('request');
-		var busStopNm = '송상현광장'
-		var apikey = 'hdXmCfUVimrmir28yWIbrHJthhsHIopiJdKM%2FQTuOT%2FgvuuwumMRnvgwdXKr2%2FEqFdPieGOw7kWRJ8w4TDDz3A%3D%3D'
-		var url = 'http://data.busan.go.kr/openBus/service/busanBIMS2/stopArr';
-		var queryParams = '?' + encodeURIComponent('ServiceKey') + '='+apikey; /* Service Key*/
-		queryParams += '&' + encodeURIComponent('ServiceKey') + '=' + encodeURIComponent(apikey); /* 공공데이터포털에서 받은 인증키 */
-		queryParams += '&' + encodeURIComponent('nodeNm') + '=' + encodeURIComponent(busStopNm); /* 정류소ID */
-
-		request({
-		url: url + queryParams,
-		method: 'GET'
-	}, function (error, response, body) {
-		//console.log('Status', response.statusCode);
-		//console.log('-----------------------------');
-		//console.log('Headers', JSON.stringify(response.headers));
-		//console.log('-----------------------------');
-		//console.log('Reponse received', body);
-		var json;
-		var parseString = require('xml2js').parseString;
-			parseString(body, function (err, result) {
-			console.dir(result);//log는 html과 같은 트리구조로 출력 dir은 json형태의 트리구조로 출력
-			json = result;
-		});
-		console.dir(Object.values(json)[0]);
-		console.dir(Object.values(json)[0].body[0].items[0].item);
-		for(var i =0; i<Object.values(json)[0].body[0].items[0].item.length; i++){
-			console.dir('버스번호:'+Object.values(json)[0].body[0].items[0].item[i].lineNo);
-			console.dir('남은 도착시간:'+Object.values(json)[0].body[0].items[0].item[i].min1);
-			console.dir('남은 정류소:'+Object.values(json)[0].body[0].items[0].item[i].station1);
-		}
-		
-		
-		
-	});
-	});
-
 	
 
 
