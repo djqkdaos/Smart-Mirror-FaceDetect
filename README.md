@@ -1,15 +1,15 @@
 <h1 align="center">Smart-Mirror-FaceDetect</h1>
-Smart Mirror Using Face Recognition
-Available for basic smart mirror functions.
-Face recognition uses MS face-api
-You can check mail and schedule using face recognition.
-Color therapy available
-Implemented through emotional recognition and Hue-api bulb control.
+<p>Smart Mirror Using Face Recognition</P>
+<p>Available for basic smart mirror functions.</p>
+<p>Face recognition uses MS face-api</p>
+<p>You can check mail and schedule using face recognition.</p>
+<p>Color therapy available
+Implemented through emotional recognition and Hue-api bulb control.</p>
 
 
 
-Customized November 2017
-ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+<p>Customized November 2017</p>
+<p>ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ</p>
 
 <h1 align="center">Smart Mirror</h1>
 
