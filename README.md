@@ -5,11 +5,11 @@
 <p>You can check mail and schedule using face recognition.</p>
 <p>Color therapy available
 Implemented through emotional recognition and Hue-api bulb control.</p>
-<p> </p>
-<p> </p>
-<p> </p>
-<p> </p>
-<p> </p>
+<br>
+<br>
+<br>
+<br>
+<br>
 <p>Customized November 2017</p>
 <p>ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ</p>
 
