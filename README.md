@@ -1,3 +1,16 @@
+<h1 align="center">Smart-Mirror-FaceDetect</h1>
+Smart Mirror Using Face Recognition
+Available for basic smart mirror functions.
+Face recognition uses MS face-api
+You can check mail and schedule using face recognition.
+Color therapy available
+Implemented through emotional recognition and Hue-api bulb control.
+
+
+
+Customized November 2017
+ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+
 <h1 align="center">Smart Mirror</h1>
 
 <p align="center">
@@ -59,12 +72,4 @@ Favicon from [In the Wake of the King](http://walkingmind.evilhat.com/2014/03/17
 Awesome.
 
 
-ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
-<h1 align="center">Smart-Mirror-FaceDetect</h1>
-Smart Mirror Using Face Recognition
-Available for basic smart mirror functions.
-Face recognition uses MS face-api
-You can check mail and schedule using face recognition.
-Color therapy available
-Implemented through emotional recognition and Hue-api bulb control.
-Customized November 2017
+
