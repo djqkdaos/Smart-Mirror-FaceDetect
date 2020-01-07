@@ -11,11 +11,11 @@ Implemented through emotional recognition and Hue-api bulb control.
  - Insert the face-api key and follow the installation below.
 
 ## [Conceptual diagram]
-<center><img src="https://user-images.githubusercontent.com/21208735/71895145-994aef80-3193-11ea-943e-57123871b37e.PNG" width="50%" height="50%"></center>
+<center><img src="https://user-images.githubusercontent.com/21208735/71895145-994aef80-3193-11ea-943e-57123871b37e.PNG" width="70%" height="70%"></center>
 
 ## [a structural chart]
-<center><img src="https://user-images.githubusercontent.com/21208735/71895161-9bad4980-3193-11ea-872f-e1dcb55464a2.PNG" width="50%" height="50%"></center>
-<center><img src="https://user-images.githubusercontent.com/21208735/71895162-9bad4980-3193-11ea-9714-51e3ab7daed0.PNG" width="50%" height="50%"></center>
+<center><img src="https://user-images.githubusercontent.com/21208735/71895161-9bad4980-3193-11ea-872f-e1dcb55464a2.PNG" width="70%" height="70%"></center>
+<center><img src="https://user-images.githubusercontent.com/21208735/71895162-9bad4980-3193-11ea-9714-51e3ab7daed0.PNG" width="70%" height="70%"></center>
 
 
 ## [Each Service Course]
