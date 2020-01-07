@@ -1,9 +1,8 @@
-<style>
+
  .center {
   display: block;
   margin: auto;
 }
-</style>
 <h1 align="center">Smart-Mirror-FaceDetect</h1>
 
 ## [Includes the following features]
