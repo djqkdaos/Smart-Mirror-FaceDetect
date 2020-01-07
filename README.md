@@ -30,7 +30,6 @@ Implemented through emotional recognition and Hue-api bulb control.
   
   
  ### [Other Sevice]
-  <center><img src="https://user-images.githubusercontent.com/21208735/71895158-9b14b300-3193-11ea-9f9b-db0322d60e5a.PNG" width="70%" height="70%"></center>
   <center><img src="https://user-images.githubusercontent.com/21208735/71895160-9b14b300-3193-11ea-9105-273ac2fec2e2.PNG" width="70%" height="70%"></center>
 
 <p>Customized November 2017</p>
