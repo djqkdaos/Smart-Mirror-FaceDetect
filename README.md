@@ -11,25 +11,27 @@ Implemented through emotional recognition and Hue-api bulb control.
  - Insert the face-api key and follow the installation below.
 
 ## [Conceptual diagram]
-<center><img src="https://user-images.githubusercontent.com/21208735/71895145-994aef80-3193-11ea-943e-57123871b37e.PNG" width="70%" height="70%"></center>
+ <center><img src="https://user-images.githubusercontent.com/21208735/71895145-994aef80-3193-11ea-943e-57123871b37e.PNG" width="70%" height="70%"></center>
 
 ## [a structural chart]
-<center><img src="https://user-images.githubusercontent.com/21208735/71895161-9bad4980-3193-11ea-872f-e1dcb55464a2.PNG" width="70%" height="70%"></center>
-<center><img src="https://user-images.githubusercontent.com/21208735/71895162-9bad4980-3193-11ea-9714-51e3ab7daed0.PNG" width="70%" height="70%"></center>
+ <center><img src="https://user-images.githubusercontent.com/21208735/71895161-9bad4980-3193-11ea-872f-e1dcb55464a2.PNG" width="70%" height="70%"></center>
+ <center><img src="https://user-images.githubusercontent.com/21208735/71895162-9bad4980-3193-11ea-9714-51e3ab7daed0.PNG" width="70%" height="70%"></center>
 
 
 ## [Each Service Course]
  ### [Deep learing Sevice]
-  ![슬라이드10](https://user-images.githubusercontent.com/21208735/71895149-99e38600-3193-11ea-919e-84114f65b712.PNG)
-  ![슬라이드11](https://user-images.githubusercontent.com/21208735/71895151-99e38600-3193-11ea-9b83-976767f74fea.PNG)
+  <center><img src="https://user-images.githubusercontent.com/21208735/71895149-99e38600-3193-11ea-919e-84114f65b712.PNG" width="70%" height="70%"></center>
+  <center><img src="https://user-images.githubusercontent.com/21208735/71895151-99e38600-3193-11ea-9b83-976767f74fea.PNG" width="70%" height="70%"></center>
+
   
  ### [Personal Sevice]
-  ![슬라이드13](https://user-images.githubusercontent.com/21208735/71895154-9a7c1c80-3193-11ea-99f8-56a2236d118f.PNG)
-  ![슬라이드14](https://user-images.githubusercontent.com/21208735/71895156-9a7c1c80-3193-11ea-875f-42d66e880706.PNG)
+  <center><img src="https://user-images.githubusercontent.com/21208735/71895154-9a7c1c80-3193-11ea-99f8-56a2236d118f.PNG" width="70%" height="70%"></center>
+  <center><img src="https://user-images.githubusercontent.com/21208735/71895156-9a7c1c80-3193-11ea-875f-42d66e880706.PNG" width="70%" height="70%"></center>
+  
   
  ### [Other Sevice]
-  ![슬라이드16](https://user-images.githubusercontent.com/21208735/71895158-9b14b300-3193-11ea-9f9b-db0322d60e5a.PNG)
-  ![슬라이드17](https://user-images.githubusercontent.com/21208735/71895160-9b14b300-3193-11ea-9105-273ac2fec2e2.PNG)
+  <center><img src="https://user-images.githubusercontent.com/21208735/71895158-9b14b300-3193-11ea-9f9b-db0322d60e5a.PNG" width="70%" height="70%"></center>
+  <center><img src="https://user-images.githubusercontent.com/21208735/71895160-9b14b300-3193-11ea-9105-273ac2fec2e2.PNG" width="70%" height="70%"></center>
 
 <p>Customized November 2017</p>
 <p>ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ</p>
